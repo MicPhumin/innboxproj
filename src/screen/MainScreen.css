@@ -1,0 +1,115 @@
+.main-box{
+    height: 90vh;
+    align-items: center;
+    color: red;
+}
+
+.main-text{
+    text-shadow: 0 0 5px black;
+}
+
+.hero {
+  position: relative;
+  height: 550px;              /* ปรับความสูงได้ */
+  background-image: url("/src/assets/innbox.jpg"); /* รูป */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f1c500; 
+}
+/* ชั้น overlay ทำให้ภาพมืด */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); /* ความมืด */
+  
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  padding: 80px 120px;
+}
+
+.page {
+  min-height: 100vh;
+  background-color: #f1c500; /* ดำด้านข้าง */
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px; /* ความกว้างตรงกลาง */
+  background-color: #fff; /* ขาวตรงกลาง */
+  padding: 24px;
+  box-sizing: border-box;
+}
+.roomCard{
+    border-radius: 20px;
+    color: black;
+    padding: 20px ;
+    width: 100%;
+    margin: 20px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* กล่องใหญ่ */
+.pill-tabs {
+  background: #fff;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* เอาเส้นใต้ antd ออก */
+.pill-tabs .ant-tabs-nav::before {
+  display: none;
+}
+
+/* แถบพื้นหลังสีเทา */
+.pill-tabs .ant-tabs-nav-list {
+  background: #f3f3f3;
+  border-radius: 40px;
+  padding: 4px;
+  display: flex;
+  width: 100%;
+}
+
+/* tab ทุกอัน */
+.pill-tabs .ant-tabs-tab {
+  flex: 1; /* ทำให้ยาวเท่ากัน */
+  justify-content: center;
+  height: 50px;
+  margin: 0;
+  border-radius: 40px;
+  font-weight: 500;
+  color: #aaa;
+  transition: all 0.25s ease; font-size: 16px;
+}
+
+/* tab active (ส้มเต็ม pill) */
+.pill-tabs .ant-tabs-tab-active {
+  background: #f1c500;
+}
+
+/* ตัวอักษร tab active */
+.pill-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  font-size: 16px;
+  font-weight: bold;
+}
+:where(.css-dev-only-do-not-override-dbp7pc).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+color: black;
+}
+
+/* hover */
+.pill-tabs .ant-tabs-tab:hover {
+  color: #f1c500;
+}
+
+/* ซ่อน ink bar */
+.pill-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+
+

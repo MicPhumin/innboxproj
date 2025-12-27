@@ -1,0 +1,6 @@
+new terminal 
+----run client----
+npm run dev
+----run express server----
+node index.js
+รัน index ของ server

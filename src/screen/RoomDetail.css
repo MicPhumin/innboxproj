@@ -1,0 +1,22 @@
+.hero {
+  position: relative;
+  height: 550px;              /* ปรับความสูงได้ */
+  background-image: url("/src/assets/innbox.jpg"); /* รูป */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f1c500; 
+}
+/* ชั้น overlay ทำให้ภาพมืด */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); /* ความมืด */
+  
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  /* padding: 80px 80px; */
+}
