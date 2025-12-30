@@ -27,9 +27,13 @@ index.get("/api/users", (req, res) => {
     return res.json(data);
   });
 });
+
+index.post()
+
 index.listen(5000, () => {
   console.log('Server running on port 5000')
 })
+
 
 // index.use("/api/users", userRoutes);
 // index.use("/api/auth", authRoutes);

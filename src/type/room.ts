@@ -7,4 +7,5 @@ export type Room = {
     email:string;
     note:string;
     date:string;
+    isActive:string;
 }

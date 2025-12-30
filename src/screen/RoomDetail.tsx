@@ -43,7 +43,7 @@ const RoomDetail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalText, setModalText] = useState();
+  const [modalText, setModalText] = useState<Room>({});
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -416,8 +416,6 @@ const RoomDetail = () => {
             </Col>
             <Col md={24} lg={8} xl={8}>
               <Card className="roomCard">
-                {/* <InnboxLoading /> */}
-                {/* <QrCodePromptpay /> */}
                 <Title level={3} style={{ marginTop: "10px" }}>
                   รายละเอียดการจอง
                 </Title>{" "}
@@ -442,9 +440,6 @@ const RoomDetail = () => {
                   form={form}
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
-                  // initialValues={{ layout: formLayout }}
-                  // onValuesChange={onFormLayoutChange}
-                  // style={{ maxWidth: formLayout === 'inline' ? 'none' : 600 }}
                 >
                   <Row justify={"start"}>
                     <Form.Item
@@ -506,14 +501,14 @@ const RoomDetail = () => {
                       />
                     </Form.Item>
 
-                    <button
+                    <Button
                       className="bookingbtn"
                       onClick={() => {}}
-                      type="submit"
+                      htmlType="submit"
                       style={{ marginTop: "10px" }}
                     >
                       จองเลย
-                    </button>
+                    </Button>
                   </Row>
                 </Form>
               </Card>
