@@ -19,6 +19,7 @@ import { getUsers } from "../../server/api/userApi.ts";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
+
 const MainScreen = () => {
   const [roomData, setRoomData] = useState<Room[]>([]);
   const [date, setDate] = useState<string[]>([]);
@@ -30,20 +31,17 @@ const MainScreen = () => {
       setRoomData(res.data);
     });
   };
-  console.log("res===>", roomData);
+
   useEffect(() => {
     getUserData();
   }, []);
 
-  const onSearch = () => {
-    // if (roomData.length == 0) {
-    //   getUserData();
-    // }
+  console.log(roomType);
 
+  const onSearch = () => {
     const filter = roomData.filter((item: Room) => {
       return item.roomType === roomType;
     });
-
     setRoomData(filter);
   };
 
@@ -97,8 +95,6 @@ const MainScreen = () => {
       dateCheck.push(dateStrings[0], dateStrings[1]);
       setDate(dateCheck);
       console.log("dateCheck: ", dateCheck);
-      console.log("From: ", dates[0], ", to: ", dates[1]);
-      console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     } else {
       console.log("Clear");
     }

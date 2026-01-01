@@ -72,10 +72,18 @@ const AdminScreen = () => {
       key: "note",
     },
     {
-      title: "สามารถเข้าพักได้",
+      title: "สถานะห้องพัก",
       dataIndex: "isActive",
       key: "isActive",
-      render: () => <Checkbox onChange={onChange}></Checkbox>,
+      render: (_, { isActive }) => (
+        <>
+          <Checkbox
+            onChange={onChange}
+            checked={isActive === "true" ? true : false}
+          ></Checkbox>
+          ,
+        </>
+      ),
     },
   ];
 

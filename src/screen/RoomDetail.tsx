@@ -30,6 +30,7 @@ import { GiCoffeePot } from "react-icons/gi";
 import { PiHairDryer } from "react-icons/pi";
 import type { Room } from "../type/room";
 import QrCodePromptpay from "../component/QrCodePromptpay";
+import { reserveUser } from "../../server/api/userApi";
 // import "dayjs/locale/th";
 
 // type Props = {};
@@ -49,8 +50,16 @@ const RoomDetail = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const handleOk = async () => {
+    // await getUsers().then((res: { data: Room[] }) => {
+    //       setRoomData(res.data);
+    //     });
+    console.log("modalText", modalText);
+
+    await reserveUser(modalText).then((res: any) => {
+      console.log("result", res);
+    });
+    // setIsModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -73,8 +82,20 @@ const RoomDetail = () => {
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
     console.log("Success:", values);
+    const dateString = state.dateCheck.join(", ");
+    const userReserve = {
+      roomId: state.roomId,
+      roomType: state.roomType,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      tel: values.tel,
+      email: values.email,
+      note: values.note === undefined ? "-" : values.note,
+      date: state.dateCheck === undefined ? "-" : dateString,
+      isActive: values.isActive === undefined ? "true" : values.isActive,
+    };
     showModal();
-    setModalText(values);
+    setModalText(userReserve);
   };
 
   const onFinishFailed: FormProps<Room>["onFinishFailed"] = (errorInfo) => {
