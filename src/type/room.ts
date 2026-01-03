@@ -8,4 +8,5 @@ export type Room = {
     note:string;
     date:string;
     isActive:string;
+    qrImage?:string;
 }
