@@ -10,10 +10,6 @@ import type { Room } from "../type/room";
 import { GrDocumentText } from "react-icons/gr";
 import InnboxLoading from "./InnboxLoading";
 
-// const onChange = (key: string) => {
-//   console.log(key);
-// };
-
 type Props = {
   room: Room[];
   dateCheck?: string[];

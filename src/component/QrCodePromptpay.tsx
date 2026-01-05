@@ -1,19 +1,20 @@
 import { QRCodeCanvas } from "qrcode.react";
 import PromptPayQR from "promptpay-qr";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Col,
   Row,
   Image,
   Button,
   Upload,
-  type UploadProps,
   Divider,
   message,
+  type UploadFile,
+  type UploadProps,
 } from "antd";
 import type { Room } from "../type/room";
 import { UploadOutlined } from "@ant-design/icons";
-import { uploadQr } from "../../server/api/userApi";
+import axios from "axios";
 
 type Props = {
   value: Room;
@@ -22,37 +23,38 @@ type Props = {
 const QrCodePromptpay = (props: Props) => {
   const promptpayId = "0933278454";
   const amount = 550.0;
-  // console.log("props.value", props.value);
 
   const qrValue = PromptPayQR(promptpayId, {
     amount,
   });
 
-  const [image, setImage] = useState(null);
-  useEffect(() => {
-    console.log("image", image);
-    uploadQr(image[0]);
-  }, [image]);
-  console.log("href", window.location.host);
+  const [image, setImage] = useState<UploadFile[]>([]);
 
   const upload: UploadProps = {
     name: "file",
-    action: "http://localhost:5000/api/users/uploadImage",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      console.log("info", info);
+    customRequest: async ({ file, onSuccess, onError }) => {
+      const formData = new FormData();
 
-      uploadQr(info);
-      if (info.file.status !== "uploading") {
-        console.log("info.file", info.file);
-        setImage(info.file);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+      const path = window.location.pathname;
+      const id = path.split("/").pop();
+
+      formData.append("hostname", window.location.host);
+      formData.append("image", file);
+      formData.append("id", id);
+
+      const res = await axios.patch(
+        `http://localhost:5000/api/users/uploadImage`,
+        formData
+      );
+      if (res.data.status === "done") {
+        const uploadFile = file as UploadFile;
+        message.success(res.data.status);
+        uploadFile.thumbUrl = `${res.data.url}`;
+        uploadFile.status = "done";
+        onSuccess?.(res.data);
+      } else {
+        message.error(res.data.status);
+        onError?.(res.data);
       }
     },
   };
@@ -130,15 +132,12 @@ const QrCodePromptpay = (props: Props) => {
               <div style={{ fontSize: 18 }}>อัพโหลดสลิป :</div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={12} xl={11}>
-              <input
-                type="file"
-                onChange={(e) => setImage(e.target.files)}
-              ></input>
-              {/* <button type=""></button> */}
               <Upload
                 {...upload}
                 maxCount={1}
-                onChange={(e: any) => setImage(e.target.file)}
+                listType="picture"
+                onChange={({ fileList }) => setImage(fileList)}
+                defaultFileList={image}
               >
                 <Button
                   icon={<UploadOutlined />}

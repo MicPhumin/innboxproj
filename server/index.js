@@ -1,10 +1,9 @@
 import express from "express";
 import cors from "cors";
 import mysql from "mysql2";
-import userRoutes from "./route/userRoute.js"
-import authRoutes from "./route/authRoute.js";
-import { message } from "antd";
 import multer from "multer";
+import fs from "fs";
+import path from "path";
 
 const index = express();
 index.use(cors());
@@ -47,26 +46,42 @@ index.patch("/api/users/reserve", (req,res)=>{
   }
 })
 
-// multer config
+const uploadDir = path.join(process.cwd(), "uploadImage");
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 const storage = multer.diskStorage({
-  destination: "/users/uploadImage/",
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, file.originalname);
   },
 });
+
+index.use("/uploadImage", express.static("uploadImage"));
 
 const upload = multer({ storage });
 
 index.patch("/api/users/uploadImage",upload.single("image"), (req,res)=>{
   try {
-    const imagePath = `uploads/${req.file.filename}`;
-    db.query("UPDATE users SET qrImage = ?",[imagePath],()=>{ return res.json({
-      image:imagePath,
-      message:"Upload Image Success"
+    const imagePath = `/uploadImage/${req.file.originalname}`;
+  
+    db.query("UPDATE users SET qrImage = ? WHERE roomId = ?",[imagePath,req.body.id],()=>{ return res.json({
+      name:req.file.originalname,
+      url:`http://localhost:5000${imagePath}`,
+      thumbUrl:`http://localhost:5000${imagePath}`,
+      status:"done"
+
     })})
   } catch (error) {
     console.log("error API=>",error);
     res.status(500).json({ message: "Upload Image error" });
+    return res.json({
+       name:req.file.filename,
+      status:"error"
+    })
   }
 })
 

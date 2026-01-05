@@ -51,37 +51,21 @@ const RoomDetail = () => {
   };
 
   const handleOk = async () => {
-    // await getUsers().then((res: { data: Room[] }) => {
-    //       setRoomData(res.data);
-    //     });
-    console.log("modalText", modalText);
-
     await reserveUser(modalText).then((res: any) => {
       console.log("result", res);
     });
-    // setIsModalOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  console.log("state", state);
-  // const { roomId } = useParams();
-  // console.log("state id", roomId);
-
-  // const handleSelectChange = (value: string) => {
-  //   console.log(`selected ${value}`);
-  // };
-
   const date1 = dayjs(state.dateCheck ? state.dateCheck[0] : "", "DD/MM/YYYY");
   const result1 = date1.format("DD MMM YYYY");
   const date2 = dayjs(state.dateCheck ? state.dateCheck[1] : "", "DD/MM/YYYY");
   const result2 = date2.format("DD MMM YYYY");
-  console.log("date1", date1);
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
-    console.log("Success:", values);
     const dateString = state.dateCheck.join(", ");
     const userReserve = {
       roomId: state.roomId,
