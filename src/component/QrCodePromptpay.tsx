@@ -15,9 +15,12 @@ import {
 import type { Room } from "../type/room";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { FaCheckSquare } from "react-icons/fa";
+import InnboxLoading from "./InnboxLoading";
 
 type Props = {
   value: Room;
+  setSuccessBtn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const QrCodePromptpay = (props: Props) => {
@@ -29,33 +32,59 @@ const QrCodePromptpay = (props: Props) => {
   });
 
   const [image, setImage] = useState<UploadFile[]>([]);
+  const [imageUrl, setImageUrl] = useState("");
+  const [checkSlip, setCheckSlip] = useState<string>();
+
+  const handleFileChange = (event: any) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(event.file.originFileObj);
+  };
 
   const upload: UploadProps = {
     name: "file",
     customRequest: async ({ file, onSuccess, onError }) => {
-      const formData = new FormData();
-
       const path = window.location.pathname;
       const id = path.split("/").pop();
+      const formData = new FormData();
+      formData.append("files", file);
 
-      formData.append("hostname", window.location.host);
-      formData.append("image", file);
-      formData.append("id", id);
-
-      const res = await axios.patch(
-        `http://localhost:5000/api/users/uploadImage`,
-        formData
-      );
-      if (res.data.status === "done") {
-        const uploadFile = file as UploadFile;
-        message.success(res.data.status);
-        uploadFile.thumbUrl = `${res.data.url}`;
-        uploadFile.status = "done";
-        onSuccess?.(res.data);
-      } else {
-        message.error(res.data.status);
-        onError?.(res.data);
+      // formData.append("hostname", window.location.host);
+      // formData.append("id", id);
+      setCheckSlip("wait");
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/checkSlip",
+          formData
+        );
+        if (response.data.success === true) {
+          message.success("Slip Check success");
+          props.setSuccessBtn(false);
+          setCheckSlip("success");
+        } else {
+          message.error("Slip Check Failed");
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
+
+      //===============upload image API==================
+      // const res = await axios.patch(
+      //   `http://localhost:5000/api/users/uploadImage`,
+      //   formData
+      // );
+      // if (res.data.status === "done") {
+      //   const uploadFile = file as UploadFile;
+      //   message.success(res.data.status);
+      //   uploadFile.thumbUrl = `${res.data.url}`;
+      //   uploadFile.status = "done";
+      //   onSuccess?.(res.data);
+      // } else {
+      //   message.error(res.data.status);
+      //   onError?.(res.data);
+      // }
     },
   };
   return (
@@ -136,7 +165,8 @@ const QrCodePromptpay = (props: Props) => {
                 {...upload}
                 maxCount={1}
                 listType="picture"
-                onChange={({ fileList }) => setImage(fileList)}
+                showUploadList={false}
+                onChange={handleFileChange}
                 defaultFileList={image}
               >
                 <Button
@@ -149,6 +179,27 @@ const QrCodePromptpay = (props: Props) => {
               </Upload>
             </Col>
           </Row>
+          {checkSlip === "wait" && (
+            <>
+              {" "}
+              <Row justify={"center"} style={{ marginTop: 20 }}>
+                <InnboxLoading />
+              </Row>
+            </>
+          )}
+          {checkSlip === "success" && (
+            <>
+              <Row justify={"center"} style={{ marginTop: 20 }}>
+                <div style={{ fontSize: 18 }}>
+                  ตรวจสอบสลิป สำเร็จ{" "}
+                  <FaCheckSquare style={{ color: "green" }} />
+                </div>
+              </Row>
+              <Row justify={"center"}>
+                <Image width={200} src={imageUrl} />
+              </Row>
+            </>
+          )}
         </Col>
       </Row>
     </>

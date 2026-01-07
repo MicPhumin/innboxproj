@@ -45,6 +45,7 @@ const RoomDetail = () => {
   const { state } = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setModalText] = useState<Room>({});
+  const [successBtn, setSuccessBtn] = useState<boolean>(true);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -81,7 +82,6 @@ const RoomDetail = () => {
     showModal();
     setModalText(userReserve);
   };
-
   const onFinishFailed: FormProps<Room>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
     openNotificationWithIcon("error", errorInfo);
@@ -109,12 +109,13 @@ const RoomDetail = () => {
             className="bookingbtn"
             size="large"
             onClick={() => handleOk()}
+            disabled={successBtn}
           >
             ยืนยัน
           </Button>,
         ]}
       >
-        <QrCodePromptpay value={modalText} />
+        <QrCodePromptpay value={modalText} setSuccessBtn={setSuccessBtn} />
       </Modal>
       <div className="hero">
         <div className="hero-overlay"></div>
