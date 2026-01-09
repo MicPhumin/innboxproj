@@ -3,4 +3,6 @@ new terminal
 npm run dev
 ----run express server----
 node index.js
+----run server with .env file----
+node --env-file=.env index.js
 รัน index ของ server

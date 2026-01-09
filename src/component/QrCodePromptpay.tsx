@@ -59,7 +59,12 @@ const QrCodePromptpay = (props: Props) => {
           "http://localhost:5000/checkSlip",
           formData
         );
-        if (response.data.success === true) {
+        const OwnerName = response.data.receiver.displayName === "กญวรรษน์";
+        if (
+          response.data.success === true &&
+          OwnerName === true &&
+          response.data.amout === 550
+        ) {
           message.success("Slip Check success");
           props.setSuccessBtn(false);
           setCheckSlip("success");
@@ -141,7 +146,7 @@ const QrCodePromptpay = (props: Props) => {
               </div>
             </Col>
           </Row>
-          <Row justify={"center"}>
+          {/* <Row justify={"center"}>
             <Image
               height={"auto"}
               width={140}
@@ -154,6 +159,18 @@ const QrCodePromptpay = (props: Props) => {
           </Row>
           <Row justify={"center"}>
             <QRCodeCanvas value={qrValue} size={150} />
+            <Image
+              height={"auto"}
+              width={140}
+              src="/src/assets/InnboxQrPromptpay.jpg"
+            />
+          </Row> */}
+          <Row justify={"center"} style={{ marginTop: 20 }}>
+            <Image
+              height={"auto"}
+              width={200}
+              src="/src/assets/InnboxQrPromptpay.jpg"
+            />
           </Row>
           <Divider />
           <Row justify={"center"}>

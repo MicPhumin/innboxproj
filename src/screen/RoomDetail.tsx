@@ -111,7 +111,7 @@ const RoomDetail = () => {
             onClick={() => handleOk()}
             disabled={successBtn}
           >
-            ยืนยัน
+            ยืนยันการจอง
           </Button>,
         ]}
       >

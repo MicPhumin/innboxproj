@@ -73,24 +73,6 @@ const AdminScreen = () => {
     },
     {
       title: "สถานะห้องพัก",
-      dataIndex: "qrImage",
-      key: "qrImage",
-      render: (_, { qrImage }) => (
-        <>
-          {qrImage ? (
-            <Image
-              width={100}
-              alt="basic"
-              src={`http://localhost:5000${qrImage}`}
-            />
-          ) : (
-            <>No Image</>
-          )}
-        </>
-      ),
-    },
-    {
-      title: "สถานะห้องพัก",
       dataIndex: "isActive",
       key: "isActive",
       render: (_, { isActive }) => (
