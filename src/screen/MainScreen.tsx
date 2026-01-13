@@ -21,7 +21,8 @@ const { RangePicker } = DatePicker;
 
 const MainScreen = () => {
   const [roomData, setRoomData] = useState<Room[]>([]);
-  const [date, setDate] = useState<RangePickerProps["value"]>(null);
+  const [date, setDate] = useState<string[]>([]);
+  const [dateShow, setDateShow] = useState<RangePickerProps["value"]>(null);
   const [roomType, setRoomType] = useState<string>("");
   const [tab, setTab] = useState<string>("1");
 
@@ -89,7 +90,7 @@ const MainScreen = () => {
 
     setRoomData(newData);
 
-    if (date !== null) {
+    if (date.length !== 0) {
       const filterWithRoomtype = newData.filter((item: Room) => {
         return item.roomType === value;
       });
@@ -110,7 +111,8 @@ const MainScreen = () => {
       console.log("change tab");
       getAllUserData();
       setRoomType("");
-      setDate(null);
+      setDate([]);
+      setDateShow(null);
     }
 
     // if (roomType !== undefined) {
@@ -161,7 +163,8 @@ const MainScreen = () => {
       }
     } else {
       console.log("Clear");
-      setDate(null);
+      setDate([]);
+      setDateShow(null);
       const newData = await getUsers().then((res: { data: Room[] }) => {
         const data = res.data.filter((item: Room) => {
           return item.isActive === "false";
@@ -210,9 +213,9 @@ const MainScreen = () => {
                 format="DD/MM/YYYY"
                 style={{ width: "100%" }}
                 defaultValue={
-                  date
+                  dateShow
                     ? [dayjs(date[0], dateFormat), dayjs(date[1], dateFormat)]
-                    : [null]
+                    : [null, null]
                 }
               />
             </Col>
