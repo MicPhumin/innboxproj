@@ -44,7 +44,17 @@ const RoomDetail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalText, setModalText] = useState<Room>({});
+  const [modalText, setModalText] = useState<Room>({
+    roomId: state.roomId,
+    roomType: state.roomType,
+    firstName: "",
+    lastName: "",
+    tel: "",
+    email: "",
+    note: "",
+    date: state.dateCheck,
+    isActive: "",
+  });
   const [successBtn, setSuccessBtn] = useState<boolean>(true);
 
   const showModal = () => {
@@ -67,7 +77,7 @@ const RoomDetail = () => {
   const result2 = date2.format("DD MMM YYYY");
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
-    const dateString = state.dateCheck.join(", ");
+    const dateString = state.dateCheck.join(",");
     const userReserve = {
       roomId: state.roomId,
       roomType: state.roomType,

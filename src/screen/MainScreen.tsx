@@ -7,98 +7,178 @@ import {
   Typography,
   Tabs,
   type TabsProps,
-  Button,
 } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
 import "./MainScreen.css";
 import ShowRoomCard from "../component/ShowRoomCard";
-import { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { useEffect, useState, type SetStateAction } from "react";
 import type { Room } from "../type/room";
 import { getUsers } from "../../server/api/userApi.ts";
+import type { RangePickerProps } from "antd/es/date-picker/index";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
 const MainScreen = () => {
   const [roomData, setRoomData] = useState<Room[]>([]);
-  const [date, setDate] = useState<string[]>([]);
-  const [roomType, setRoomType] = useState<string>();
+  const [date, setDate] = useState<RangePickerProps["value"]>(null);
+  const [roomType, setRoomType] = useState<string>("");
   const [tab, setTab] = useState<string>("1");
 
-  const getUserData = async () => {
+  const getAllUserData = async () => {
     await getUsers().then((res: { data: Room[] }) => {
-      setRoomData(res.data);
+      const data = res.data.filter((item: Room) => {
+        return item.isActive === "false";
+      });
+      setRoomData(data);
     });
   };
+
+  // const onSearch = async () => {
+  //   if (date !== null && roomType) {
+  //     console.log("room type only");
+  //     const filterWithDate = roomData.filter((item: Room) => {
+  //       return item.roomType === roomType;
+  //     });
+
+  //     setRoomData(filterWithDate);
+  //   } else if (date !== null && roomType === undefined) {
+  //     console.log("date only");
+  //     const newData = await getUsers().then((res: { data: Room[] }) => {
+  //       const data = res.data.filter((item: Room) => {
+  //         return item.isActive === "false";
+  //       });
+  //       return data;
+  //     });
+  //     setRoomData(newData);
+  //     const filterIsActive = newData.filter((item: Room) => {
+  //       return item.isActive === "false";
+  //     });
+  //     const filterWithDate = filterIsActive.filter((item: Room) => {
+  //       return item.date !== date?.join();
+  //     });
+
+  //     setRoomData(filterWithDate);
+  //   }
+
+  //   if (roomType && date !== null) {
+  //     console.log("roomtype,date");
+  //     const filterWithDate = roomData.filter((item: Room) => {
+  //       return item.date !== date?.join();
+  //     });
+  //     const filterWithRoomtype = filterWithDate.filter((item: Room) => {
+  //       return item.roomType === roomType;
+  //     });
+  //     setRoomData(filterWithRoomtype);
+  //   }
+  // };
 
   useEffect(() => {
-    getUserData();
+    getAllUserData();
   }, []);
 
-  console.log(roomType);
-
-  const onSearch = () => {
-    const filter = roomData.filter((item: Room) => {
-      return item.roomType === roomType;
-    });
-    setRoomData(filter);
-  };
-
-  // const DeleteUser = async (key: any) => {
-  //   console.log("REACT DELETE key:", key);
-  //   await deleteUser(key);
-  //   setRoomData((prev) => prev.filter((u) => u.roomId !== key));
-  // };
-
-  // const addUser = async () => {
-  //   await createUser({ roomType: "ห้องเตียงเดี่ยว" });
-  // };
-
-  // --------------------Old use Axios---------------------------------------------
-  // const getUserData = async () => {
-  //     await axios
-  //       .get("http://localhost:5000/api/users/")
-  //       .then((res) => setRoomData(res.data));
-  //   };
-
-  //   const getRoomDataById = async (key: number) => {
-  //     await axios
-  //       .get(`http://localhost:5000/api/users/${key}`)
-  //       .then((res) => console.log("res=ID>>", res.data));
-  //   };
-
-  //---------------------------------------------------------------------------------------
-
-  const handleSelectChange = (value: string) => {
-    getUserData();
+  const handleSelectChange = async (value: string) => {
     setRoomType(value);
+
+    const newData = await getUsers().then((res: { data: Room[] }) => {
+      const data = res.data.filter((item: Room) => {
+        return item.isActive === "false" && item.roomType === value;
+      });
+      return data;
+    });
+
+    setRoomData(newData);
+
+    if (date !== null) {
+      const filterWithRoomtype = newData.filter((item: Room) => {
+        return item.roomType === value;
+      });
+      const filterWithDate = filterWithRoomtype.filter((item: Room) => {
+        return item.date !== date?.join();
+      });
+
+      setRoomData(filterWithDate);
+    }
   };
 
   const onChange = (key: string) => {
     setTab(key);
+
     if (key === "2") {
-      getUserData();
+      getAllUserData();
+    } else {
+      console.log("change tab");
+      getAllUserData();
+      setRoomType("");
+      setDate(null);
     }
 
-    if (roomType !== undefined) {
-      onSearch();
-    }
+    // if (roomType !== undefined) {
+    //   console.log("change tab");
+    //   onSearch();
+    // }
   };
 
-  const onRangeChange = (
+  const onRangeChange: RangePickerProps["onChange"] = async (
     dates: null | (Dayjs | null)[],
     dateStrings: string[]
   ) => {
     if (dates) {
-      const dateCheck = [];
+      const dateCheck: SetStateAction<string[]> = [];
       dateCheck.push(dateStrings[0], dateStrings[1]);
       setDate(dateCheck);
-      console.log("dateCheck: ", dateCheck);
+      console.log("roomType", roomType);
+      if (dateCheck.length !== 0 && roomType === "") {
+        console.log("date only");
+        console.log("roomData", roomData);
+        const newData = await getUsers().then((res: { data: Room[] }) => {
+          const data = res.data.filter((item: Room) => {
+            return item.isActive === "false";
+          });
+          return data;
+        });
+
+        const filterWithDate = newData.filter((item: Room) => {
+          return item.date !== dateCheck.join();
+        });
+
+        setRoomData(filterWithDate);
+      } else if (roomType && dateCheck.length !== 0) {
+        console.log("roomtype,date");
+        const newData = await getUsers().then((res: { data: Room[] }) => {
+          const data = res.data.filter((item: Room) => {
+            return item.isActive === "false";
+          });
+          return data;
+        });
+        const filterWithDate = newData.filter((item: Room) => {
+          return item.date !== dateCheck.join();
+        });
+        const filterWithRoomtype = filterWithDate.filter((item: Room) => {
+          return item.roomType === roomType;
+        });
+        setRoomData(filterWithRoomtype);
+      }
     } else {
       console.log("Clear");
+      setDate(null);
+      const newData = await getUsers().then((res: { data: Room[] }) => {
+        const data = res.data.filter((item: Room) => {
+          return item.isActive === "false";
+        });
+        return data;
+      });
+
+      if (roomType) {
+        console.log("roomType only with clear");
+        const filter = newData.filter((item: Room) => {
+          return item.roomType === roomType;
+        });
+        setRoomData(filter);
+      }
     }
   };
+  const dateFormat = "DD/MM/YYYY";
 
   const items: TabsProps["items"] = [
     {
@@ -107,7 +187,7 @@ const MainScreen = () => {
       children: (
         <>
           <Row justify={"center"} gutter={16} align={"middle"}>
-            <Col md={20} lg={12} xl={9}>
+            <Col md={20} lg={12} xl={12}>
               <Select
                 size="large"
                 placeholder="กรุณาเลือกประเภทห้องพัก"
@@ -120,20 +200,23 @@ const MainScreen = () => {
                   },
                   { value: "ห้องเตียงคู่", label: "ห้องเตียงคู่" },
                 ]}
+                defaultValue={roomType ? roomType : undefined}
               />
             </Col>
-            <Col md={20} lg={12} xl={9}>
+            <Col md={20} lg={12} xl={12}>
               <RangePicker
                 size="large"
                 onChange={onRangeChange}
                 format="DD/MM/YYYY"
-                onBlur={(_, info) => {
-                  console.log("Focus:", info.range);
-                }}
                 style={{ width: "100%" }}
+                defaultValue={
+                  date
+                    ? [dayjs(date[0], dateFormat), dayjs(date[1], dateFormat)]
+                    : [null]
+                }
               />
             </Col>
-            <Col xs={16} sm={16} md={20} lg={12} xl={6}>
+            {/* <Col xs={16} sm={16} md={20} lg={12} xl={6}>
               <Button
                 icon={<SearchOutlined style={{ fontSize: 16 }} />}
                 iconPlacement="end"
@@ -143,7 +226,7 @@ const MainScreen = () => {
               >
                 ค้นหา
               </Button>
-            </Col>
+            </Col> */}
           </Row>
         </>
       ),
