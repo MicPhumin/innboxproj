@@ -23,7 +23,7 @@ const MainScreen = () => {
   const [roomData, setRoomData] = useState<Room[]>([]);
   const [date, setDate] = useState<string[]>([]);
   const [dateShow, setDateShow] = useState<RangePickerProps["value"]>(null);
-  const [roomType, setRoomType] = useState<string>("");
+  const [roomType, setRoomType] = useState<string | undefined>(undefined);
   const [tab, setTab] = useState<string>("1");
 
   const getAllUserData = async () => {
@@ -107,12 +107,12 @@ const MainScreen = () => {
 
     if (key === "2") {
       getAllUserData();
+      setRoomType(undefined);
+      setDateShow(null);
     } else {
       console.log("change tab");
       getAllUserData();
-      setRoomType("");
       setDate([]);
-      setDateShow(null);
     }
 
     // if (roomType !== undefined) {
@@ -129,6 +129,7 @@ const MainScreen = () => {
       const dateCheck: SetStateAction<string[]> = [];
       dateCheck.push(dateStrings[0], dateStrings[1]);
       setDate(dateCheck);
+      setDateShow([dayjs(dates[0]), dayjs(dates[1])]);
       console.log("roomType", roomType);
       if (dateCheck.length !== 0 && roomType === "") {
         console.log("date only");
@@ -203,7 +204,7 @@ const MainScreen = () => {
                   },
                   { value: "ห้องเตียงคู่", label: "ห้องเตียงคู่" },
                 ]}
-                defaultValue={roomType ? roomType : undefined}
+                value={roomType === undefined ? undefined : roomType}
               />
             </Col>
             <Col md={20} lg={12} xl={12}>
@@ -212,10 +213,10 @@ const MainScreen = () => {
                 onChange={onRangeChange}
                 format="DD/MM/YYYY"
                 style={{ width: "100%" }}
-                defaultValue={
+                value={
                   dateShow
                     ? [dayjs(date[0], dateFormat), dayjs(date[1], dateFormat)]
-                    : [null, null]
+                    : null
                 }
               />
             </Col>
