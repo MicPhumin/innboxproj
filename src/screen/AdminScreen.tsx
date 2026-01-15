@@ -86,7 +86,6 @@ const AdminScreen = () => {
             onChange={onChange}
             checked={isActive === "true" ? true : false}
           ></Checkbox>
-          ,
         </>
       ),
     },
