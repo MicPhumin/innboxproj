@@ -52,7 +52,8 @@ const RoomDetail = () => {
     tel: "",
     email: "",
     note: "",
-    date: state.dateCheck,
+    start_date: state.dateCheck[0],
+    end_date: state.dateCheck[1],
     isActive: "",
   });
   const [successBtn, setSuccessBtn] = useState<boolean>(true);
@@ -75,9 +76,9 @@ const RoomDetail = () => {
   const result1 = date1.format("DD MMM YYYY");
   const date2 = dayjs(state.dateCheck ? state.dateCheck[1] : "", "DD/MM/YYYY");
   const result2 = date2.format("DD MMM YYYY");
+  console.log("state", state);
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
-    const dateString = state.dateCheck.join(",");
     const userReserve = {
       roomId: state.roomId,
       roomType: state.roomType,
@@ -86,7 +87,8 @@ const RoomDetail = () => {
       tel: values.tel,
       email: values.email,
       note: values.note === undefined ? "-" : values.note,
-      date: state.dateCheck === undefined ? "-" : dateString,
+      start_date: state.dateCheck === undefined ? "-" : state.dateCheck[0],
+      end_date: state.dateCheck === undefined ? "-" : state.dateCheck[1],
       isActive: values.isActive === undefined ? "true" : values.isActive,
     };
     showModal();

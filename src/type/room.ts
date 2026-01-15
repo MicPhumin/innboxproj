@@ -6,6 +6,7 @@ export type Room = {
     tel:string;
     email:string;
     note:string;
-    date:string;
+    start_date:string;
+    end_date:string;
     isActive:string;
 }

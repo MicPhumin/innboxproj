@@ -6,6 +6,8 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 import FormData from "form-data";
+import cron from "node-cron";
+
 
 const index = express();
 index.use(cors());
@@ -40,8 +42,8 @@ index.patch("/api/users/reserve", (req,res)=>{
     console.log("req.body api",req.body);
     db.query(`
         UPDATE users
-        SET firstName = ?, lastName = ?, tel = ?, email = ?, note = ?, date = ?, isActive = ? WHERE roomId = ?
-        `,[req.body.firstName, req.body.lastName, req.body.tel, req.body.email, req.body.note, req.body.date, req.body.isActive, req.body.roomId],
+        SET firstName = ?, lastName = ?, tel = ?, email = ?, note = ?, start_date = ?, end_date = ?, isActive = ? WHERE roomId = ?
+        `,[req.body.firstName, req.body.lastName, req.body.tel, req.body.email, req.body.note, req.body.start_date, req.body.end_date, req.body.isActive, req.body.roomId],
           (err,data)=>{
             return res.json({ message: "Reserve Complete" });
         })
@@ -71,7 +73,27 @@ index.post('/checkSlip', upload.single('files'), async(req, res) => {
     res.status(500).send(error.message);
   }
 })
-//================API for save Image========================
+
+//=======when expired delete room at 12.00==========
+cron.schedule(
+  "0 12 * * *",
+  () => {
+    const sql = `
+      UPDATE users SET firstName= "", lastName= "", tel= "", email= "", note= "", isActive= "false", start_date= null, end_date= null
+      WHERE STR_TO_DATE(end_date, '%d/%m/%Y') = CURDATE()
+    `;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error("Auto delete failed:", err);
+      } else {
+        console.log("Auto deleted users:", result.affectedRows);
+      }
+    });
+  },
+  {
+    timezone: "Asia/Bangkok",
+  });
+//===========API for save Image========================
 // const uploadDir = path.join(process.cwd(), "uploadImage");
 
 // if (!fs.existsSync(uploadDir)) {

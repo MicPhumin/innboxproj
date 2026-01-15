@@ -62,9 +62,14 @@ const AdminScreen = () => {
       key: "email",
     },
     {
-      title: "วันที่เข้า-วันที่ออก",
-      dataIndex: "date",
-      key: "date",
+      title: "วันที่เข้า",
+      dataIndex: "start_date",
+      key: "start_date",
+    },
+    {
+      title: "วันที่ออก",
+      dataIndex: "end_date",
+      key: "end_date",
     },
     {
       title: "คำขอพิเศษ(หากมี)",
