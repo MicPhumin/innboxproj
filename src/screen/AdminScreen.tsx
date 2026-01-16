@@ -60,6 +60,20 @@ const AdminScreen = () => {
     console.log(`checked = ${e.target.checked}`);
   };
 
+  const onRangeChange: RangePickerProps["onChange"] = async (
+    dates: null | (Dayjs | null)[],
+    dateStrings: string[]
+  ) => {
+    if (dates) {
+      const dateCheck: SetStateAction<string[]> = [];
+      dateCheck.push(dateStrings[0], dateStrings[1]);
+      setDate(dateCheck);
+    } else {
+      console.log("Clear");
+      setDate([]);
+    }
+  };
+
   const onFinish: FormProps<Room>["onFinish"] = async (values) => {
     console.log("values", values);
 
@@ -92,17 +106,32 @@ const AdminScreen = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const onRangeChange: RangePickerProps["onChange"] = async (
-    dates: null | (Dayjs | null)[],
-    dateStrings: string[]
-  ) => {
-    if (dates) {
-      const dateCheck: SetStateAction<string[]> = [];
-      dateCheck.push(dateStrings[0], dateStrings[1]);
-      setDate(dateCheck);
-    } else {
-      console.log("Clear");
-      setDate([]);
+  const onDelete = async (record: Room) => {
+    console.log("values", record);
+
+    const userReserve = {
+      roomId: record.roomId,
+      roomType: record.roomType,
+      firstName: "",
+      lastName: "",
+      tel: "",
+      email: "",
+      note: "",
+      start_date: "",
+      end_date: "",
+      isActive: "false",
+    };
+
+    try {
+      await reserveUser(userReserve).then((res) => {
+        console.log("result", res);
+        openNotificationWithIcon("success", "ลบข้อมูลสำเร็จ");
+      });
+      setIsModalOpen(false);
+      getUserData();
+    } catch (error) {
+      console.log("result=>error", error);
+      openNotificationWithIcon("error", "ลบไม่สำเร็จ");
     }
   };
 
@@ -162,6 +191,25 @@ const AdminScreen = () => {
             onChange={onChange}
             checked={isActive === "true" ? true : false}
           ></Checkbox>
+        </>
+      ),
+    },
+    {
+      title: "",
+      dataIndex: "",
+      key: "",
+      render: (_, record: Room) => (
+        <>
+          <Button
+            className="bookingbtn"
+            size="large"
+            onClick={() => {
+              console.log("record", record);
+              onDelete(record);
+            }}
+          >
+            ลบข้อมูล
+          </Button>
         </>
       ),
     },
