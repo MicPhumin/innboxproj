@@ -36,7 +36,6 @@ const AdminScreen = () => {
   const [api, contextHolder] = notification.useNotification();
   const getUserData = async () => {
     await getUsers().then((res: { data: Room[] }) => {
-      console.log("res===>", res.data);
       setRoomData(res.data);
     });
   };
@@ -75,8 +74,6 @@ const AdminScreen = () => {
   };
 
   const onFinish: FormProps<Room>["onFinish"] = async (values) => {
-    console.log("values", values);
-
     const userReserve = {
       roomId: values.roomId,
       roomType: values.roomType,
@@ -107,8 +104,6 @@ const AdminScreen = () => {
   };
 
   const onDelete = async (record: Room) => {
-    console.log("values", record);
-
     const userReserve = {
       roomId: record.roomId,
       roomType: record.roomType,
@@ -204,7 +199,6 @@ const AdminScreen = () => {
             className="bookingbtn"
             size="large"
             onClick={() => {
-              console.log("record", record);
               onDelete(record);
             }}
           >
