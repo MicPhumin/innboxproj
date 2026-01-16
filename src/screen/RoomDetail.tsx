@@ -63,7 +63,7 @@ const RoomDetail = () => {
   };
 
   const handleOk = async () => {
-    await reserveUser(modalText).then((res: any) => {
+    await reserveUser(modalText).then((res) => {
       console.log("result", res);
     });
   };

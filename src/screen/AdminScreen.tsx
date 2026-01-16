@@ -76,7 +76,7 @@ const AdminScreen = () => {
       isActive: "true",
     };
     try {
-      await reserveUser(userReserve).then((res: any) => {
+      await reserveUser(userReserve).then((res) => {
         console.log("result", res);
         openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ");
       });
