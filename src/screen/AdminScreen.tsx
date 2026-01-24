@@ -19,10 +19,10 @@ import {
 
 import React, { useEffect, useState, type SetStateAction } from "react";
 import type { Room } from "../type/room";
-import { getUsers, reserveUser } from "../../server/api/userApi";
 import TextArea from "antd/es/input/TextArea";
 import type { RangePickerProps } from "antd/es/date-picker";
 import type { Dayjs } from "dayjs";
+import axios from "axios";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -35,9 +35,11 @@ const AdminScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const getUserData = async () => {
-    await getUsers().then((res: { data: Room[] }) => {
-      setRoomData(res.data);
-    });
+    await axios
+      .get("http://localhost:5000/api/users")
+      .then((res: { data: Room[] }) => {
+        setRoomData(res.data);
+      });
   };
   useEffect(() => {
     getUserData();
@@ -61,7 +63,7 @@ const AdminScreen = () => {
 
   const onRangeChange: RangePickerProps["onChange"] = async (
     dates: null | (Dayjs | null)[],
-    dateStrings: string[]
+    dateStrings: string[],
   ) => {
     if (dates) {
       const dateCheck: SetStateAction<string[]> = [];
@@ -87,10 +89,13 @@ const AdminScreen = () => {
       isActive: "true",
     };
     try {
-      await reserveUser(userReserve).then((res) => {
-        console.log("result", res);
-        openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ");
-      });
+      await axios
+        .patch("http://localhost:5000/api/users/reserve", userReserve)
+        .then((res) => {
+          console.log("result", res);
+          openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ");
+        });
+
       setIsModalOpen(false);
       getUserData();
     } catch (error) {
@@ -118,10 +123,13 @@ const AdminScreen = () => {
     };
 
     try {
-      await reserveUser(userReserve).then((res) => {
-        console.log("result", res);
-        openNotificationWithIcon("success", "ลบข้อมูลสำเร็จ");
-      });
+      await axios
+        .patch("http://localhost:5000/api/users/reserve", userReserve)
+        .then((res) => {
+          console.log("result", res);
+          openNotificationWithIcon("success", "ลบข้อมูลสำเร็จ");
+        });
+
       setIsModalOpen(false);
       getUserData();
     } catch (error) {

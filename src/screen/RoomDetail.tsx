@@ -30,7 +30,7 @@ import { GiCoffeePot } from "react-icons/gi";
 import { PiHairDryer } from "react-icons/pi";
 import type { Room } from "../type/room";
 import QrCodePromptpay from "../component/QrCodePromptpay";
-import { reserveUser } from "../../server/api/userApi";
+import axios from "axios";
 // import "dayjs/locale/th";
 
 // type Props = {};
@@ -63,7 +63,7 @@ const RoomDetail = () => {
   };
 
   const handleOk = async () => {
-    await reserveUser(modalText).then((res) => {
+    await axios.patch("http://localhost:5000/api/users/reserve").then((res) => {
       console.log("result", res);
     });
   };
@@ -169,7 +169,7 @@ const RoomDetail = () => {
                     preview={{
                       onChange: (current, prev) =>
                         console.log(
-                          `current index: ${current}, prev index: ${prev}`
+                          `current index: ${current}, prev index: ${prev}`,
                         ),
                     }}
                   >

@@ -13,8 +13,8 @@ import ShowRoomCard from "../component/ShowRoomCard";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState, type SetStateAction } from "react";
 import type { Room } from "../type/room";
-import { getUsers } from "../../server/api/userApi.ts";
 import type { RangePickerProps } from "antd/es/date-picker/index";
+import axios from "axios";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -27,12 +27,14 @@ const MainScreen = () => {
   const [tab, setTab] = useState<string>("1");
 
   const getAllUserData = async () => {
-    await getUsers().then((res: { data: Room[] }) => {
-      const data = res.data.filter((item: Room) => {
-        return item.isActive === "false";
+    await axios
+      .get("http://localhost:5000/api/users")
+      .then((res: { data: Room[] }) => {
+        const data = res.data.filter((item: Room) => {
+          return item.isActive === "false";
+        });
+        setRoomData(data);
       });
-      setRoomData(data);
-    });
   };
 
   // const onSearch = async () => {
@@ -81,12 +83,14 @@ const MainScreen = () => {
   const handleSelectChange = async (value: string) => {
     setRoomType(value);
 
-    const newData = await getUsers().then((res: { data: Room[] }) => {
-      const data = res.data.filter((item: Room) => {
-        return item.isActive === "false" && item.roomType === value;
+    const newData = await axios
+      .get("http://localhost:5000/api/users")
+      .then((res: { data: Room[] }) => {
+        const data = res.data.filter((item: Room) => {
+          return item.isActive === "false" && item.roomType === value;
+        });
+        return data;
       });
-      return data;
-    });
 
     setRoomData(newData);
 
@@ -123,7 +127,7 @@ const MainScreen = () => {
 
   const onRangeChange: RangePickerProps["onChange"] = async (
     dates: null | (Dayjs | null)[],
-    dateStrings: string[]
+    dateStrings: string[],
   ) => {
     if (dates) {
       const dateCheck: SetStateAction<string[]> = [];
@@ -134,12 +138,15 @@ const MainScreen = () => {
       if (dateCheck.length !== 0 && roomType === "") {
         console.log("date only");
         console.log("roomData", roomData);
-        const newData = await getUsers().then((res: { data: Room[] }) => {
-          const data = res.data.filter((item: Room) => {
-            return item.isActive === "false";
+
+        const newData = await axios
+          .get("http://localhost:5000/api/users")
+          .then((res: { data: Room[] }) => {
+            const data = res.data.filter((item: Room) => {
+              return item.isActive === "false";
+            });
+            return data;
           });
-          return data;
-        });
 
         const filterWithDate = newData.filter((item: Room) => {
           return item.date !== dateCheck.join();
@@ -148,12 +155,14 @@ const MainScreen = () => {
         setRoomData(filterWithDate);
       } else if (roomType && dateCheck.length !== 0) {
         console.log("roomtype,date");
-        const newData = await getUsers().then((res: { data: Room[] }) => {
-          const data = res.data.filter((item: Room) => {
-            return item.isActive === "false";
+        const newData = await axios
+          .get("http://localhost:5000/api/users")
+          .then((res: { data: Room[] }) => {
+            const data = res.data.filter((item: Room) => {
+              return item.isActive === "false";
+            });
+            return data;
           });
-          return data;
-        });
         const filterWithDate = newData.filter((item: Room) => {
           return item.date !== dateCheck.join();
         });
@@ -166,13 +175,14 @@ const MainScreen = () => {
       console.log("Clear");
       setDate([]);
       setDateShow(null);
-      const newData = await getUsers().then((res: { data: Room[] }) => {
-        const data = res.data.filter((item: Room) => {
-          return item.isActive === "false";
+      const newData = await axios
+        .get("http://localhost:5000/api/users")
+        .then((res: { data: Room[] }) => {
+          const data = res.data.filter((item: Room) => {
+            return item.isActive === "false";
+          });
+          return data;
         });
-        return data;
-      });
-
       if (roomType) {
         console.log("roomType only with clear");
         const filter = newData.filter((item: Room) => {
