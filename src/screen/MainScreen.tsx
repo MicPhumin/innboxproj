@@ -15,6 +15,7 @@ import { useEffect, useState, type SetStateAction } from "react";
 import type { Room } from "../type/room";
 import type { RangePickerProps } from "antd/es/date-picker/index";
 import axios from "axios";
+import innboxLogowithBG from "/src/assets/innboxLogowithBG.jpg";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -257,11 +258,7 @@ const MainScreen = () => {
       <div className="hero-content">
         <Row justify={"center"}>
           <div style={{ width: "100%" }}>
-            <Image
-              width={300}
-              src="src\assets\innboxLogowithBG.jpg"
-              preview={false}
-            />
+            <Image width={300} src={innboxLogowithBG} preview={false} />
             <Title level={1} style={{ marginTop: "10px", color: "white" }}>
               จองที่พัก INNBOX
             </Title>{" "}

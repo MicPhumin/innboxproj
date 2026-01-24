@@ -18,7 +18,7 @@ import axios from "axios";
 import { FaCheckSquare } from "react-icons/fa";
 import InnboxLoading from "./InnboxLoading";
 import { MdError, MdOutlineWarning } from "react-icons/md";
-
+import InnboxQrPromptpay from "/src/assets/InnboxQrPromptpay.jpg";
 type Props = {
   value: Room;
   setSuccessBtn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -182,11 +182,7 @@ const QrCodePromptpay = (props: Props) => {
             />
           </Row> */}
           <Row justify={"center"} style={{ marginTop: 20 }}>
-            <Image
-              height={"auto"}
-              width={200}
-              src="/src/assets/InnboxQrPromptpay.jpg"
-            />
+            <Image height={"auto"} width={200} src={InnboxQrPromptpay} />
           </Row>
           <Divider />
           <Row justify={"center"}>

@@ -9,6 +9,11 @@ import { useNavigate } from "react-router";
 import type { Room } from "../type/room";
 import { GrDocumentText } from "react-icons/gr";
 import InnboxLoading from "./InnboxLoading";
+import singleroom from "../assets/singleroom.jpg";
+import twinroom from "../assets/twinroom.jpg";
+import desk from "../assets/desk.jpg";
+import glassbath from "../assets/glassbath.jpg";
+import bathroom from "../assets/bathroom.jpg";
 
 type Props = {
   room: Room[];
@@ -39,14 +44,14 @@ const ShowRoomCard = (props: Props) => {
                           <Image
                             height={300}
                             width={400}
-                            src="src\assets\singleroom.jpg"
+                            src={singleroom}
                             style={{ borderRadius: 20 }}
                           />
                         ) : (
                           <Image
                             height={300}
                             width={400}
-                            src="src\assets\twinroom.jpg"
+                            src={twinroom}
                             style={{ borderRadius: 20 }}
                           />
                         )}
@@ -55,7 +60,7 @@ const ShowRoomCard = (props: Props) => {
                         <Image
                           height={300}
                           width={400}
-                          src="src\assets\desk.jpg"
+                          src={desk}
                           style={{ borderRadius: 20 }}
                         />
                       </div>
@@ -63,7 +68,7 @@ const ShowRoomCard = (props: Props) => {
                         <Image
                           height={300}
                           width={400}
-                          src="src\assets\glassbath.jpg"
+                          src={glassbath}
                           style={{ borderRadius: 20 }}
                         />
                       </div>
@@ -71,7 +76,7 @@ const ShowRoomCard = (props: Props) => {
                         <Image
                           height={300}
                           width={400}
-                          src="src\assets\bathroom.jpg"
+                          src={bathroom}
                           style={{ borderRadius: 20 }}
                         />
                       </div>

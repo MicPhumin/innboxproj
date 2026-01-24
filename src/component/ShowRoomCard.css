@@ -23,7 +23,7 @@
     transition: 0.3s;
     font-size: 16px;
 }
-:where(.css-dev-only-do-not-override-dbp7pc).ant-btn:not(:disabled):not(.ant-btn-disabled):hover{
+:where(.css-dbp7pc).ant-btn:not(:disabled):not(.ant-btn-disabled):hover{
      background-color: white;
     color: #f1c500;
     border-color: #f1c500;

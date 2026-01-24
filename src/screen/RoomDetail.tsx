@@ -31,6 +31,14 @@ import { PiHairDryer } from "react-icons/pi";
 import type { Room } from "../type/room";
 import QrCodePromptpay from "../component/QrCodePromptpay";
 import axios from "axios";
+import singleroom from "/src/assets/singleroom.jpg";
+import twinroom from "/src/assets/twinroom.jpg";
+import desk from "/src/assets/desk.jpg";
+import glassbath from "/src/assets/glassbath.jpg";
+import bathroom from "/src/assets/bathroom.jpg";
+import bike from "/src/assets/bike.jpg";
+import sheepdoll from "/src/assets/sheepdoll.jpg";
+
 // import "dayjs/locale/th";
 
 // type Props = {};
@@ -175,53 +183,25 @@ const RoomDetail = () => {
                   >
                     <Col>
                       {state.roomType === "ห้องเตียงเดี่ยว" ? (
-                        <Image
-                          height={200}
-                          width={300}
-                          src="/src/assets/singleroom.jpg"
-                        />
+                        <Image height={200} width={300} src={singleroom} />
                       ) : (
-                        <Image
-                          height={200}
-                          width={300}
-                          src="/src/assets/twinroom.jpg"
-                        />
+                        <Image height={200} width={300} src={twinroom} />
                       )}
                     </Col>
                     <Col>
-                      <Image
-                        height={200}
-                        width={300}
-                        src="/src/assets/desk.jpg"
-                      />
+                      <Image height={200} width={300} src={desk} />
                     </Col>
                     <Col>
-                      <Image
-                        height={200}
-                        width={300}
-                        src="/src/assets/glassbath.jpg"
-                      />
+                      <Image height={200} width={300} src={glassbath} />
                     </Col>
                     <Col>
-                      <Image
-                        height={200}
-                        width={300}
-                        src="/src/assets/bathroom.jpg"
-                      />
+                      <Image height={200} width={300} src={bathroom} />
                     </Col>
                     <Col>
-                      <Image
-                        height={200}
-                        width={300}
-                        src="/src/assets/bike.jpg"
-                      />
+                      <Image height={200} width={300} src={bike} />
                     </Col>
                     <Col>
-                      <Image
-                        height={200}
-                        width={300}
-                        src="/src/assets/sheepdoll.jpg"
-                      />
+                      <Image height={200} width={300} src={sheepdoll} />
                     </Col>
                   </Image.PreviewGroup>
                 </Row>

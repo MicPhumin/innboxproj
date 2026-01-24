@@ -23,6 +23,7 @@ import TextArea from "antd/es/input/TextArea";
 import type { RangePickerProps } from "antd/es/date-picker";
 import type { Dayjs } from "dayjs";
 import axios from "axios";
+import innboxLogowithBG from "/src/assets/innboxLogowithBG.jpg";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -347,11 +348,7 @@ const AdminScreen = () => {
         </Row>
         <Row justify={"center"}>
           <div style={{ width: "100%" }}>
-            <Image
-              width={300}
-              src="src\assets\innboxLogowithBG.jpg"
-              preview={false}
-            />
+            <Image width={300} src={innboxLogowithBG} preview={false} />
             <Title level={1} style={{ marginTop: "10px", color: "white" }}>
               Admin INNBOX
             </Title>{" "}

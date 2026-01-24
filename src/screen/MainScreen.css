@@ -97,7 +97,7 @@
   font-size: 16px;
   font-weight: bold;
 }
-:where(.css-dev-only-do-not-override-dbp7pc).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+:where(.css-dbp7pc).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
 color: black;
 }
 
