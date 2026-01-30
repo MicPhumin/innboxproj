@@ -23,7 +23,7 @@ import TextArea from "antd/es/input/TextArea";
 import type { RangePickerProps } from "antd/es/date-picker";
 import type { Dayjs } from "dayjs";
 import axios from "axios";
-import innboxLogowithBG from "/src/assets/innboxLogowithBG.jpg";
+import innboxLogowithBG from "../assets/InnboxLogowithBG.jpg";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;

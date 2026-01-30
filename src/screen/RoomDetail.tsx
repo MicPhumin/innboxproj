@@ -31,13 +31,13 @@ import { PiHairDryer } from "react-icons/pi";
 import type { Room } from "../type/room";
 import QrCodePromptpay from "../component/QrCodePromptpay";
 import axios from "axios";
-import singleroom from "/src/assets/singleroom.jpg";
-import twinroom from "/src/assets/twinroom.jpg";
-import desk from "/src/assets/desk.jpg";
-import glassbath from "/src/assets/glassbath.jpg";
-import bathroom from "/src/assets/bathroom.jpg";
-import bike from "/src/assets/bike.jpg";
-import sheepdoll from "/src/assets/sheepdoll.jpg";
+import singleroom from "../assets/singleroom.jpg";
+import twinroom from "../assets/twinroom.jpg";
+import desk from "../assets/desk.jpg";
+import glassbath from "../assets/glassbath.jpg";
+import bathroom from "../assets/bathroom.jpg";
+import bike from "../assets/bike.jpg";
+import sheepdoll from "../assets/sheepdoll.jpg";
 
 // import "dayjs/locale/th";
 

@@ -15,7 +15,7 @@ import { useEffect, useState, type SetStateAction } from "react";
 import type { Room } from "../type/room";
 import type { RangePickerProps } from "antd/es/date-picker/index";
 import axios from "axios";
-import innboxLogowithBG from "/src/assets/innboxLogowithBG.jpg";
+import innboxLogowithBG from "../assets/InnboxLogowithBG.jpg";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
