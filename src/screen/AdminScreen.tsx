@@ -157,6 +157,11 @@ const AdminScreen = () => {
       title: "ประเภทห้อง",
       dataIndex: "roomType",
       key: "roomType",
+      render: (text: string) => (
+        <>
+          <div>{text === "single" ? "ห้องเตียงเดี่ยว" : "ห้องเตียงคู่"}</div>
+        </>
+      ),
     },
     {
       title: "ชื่อจริง",
