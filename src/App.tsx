@@ -10,10 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainScreen />} />
         <Route path="/roomdetail/:roomId" element={<RoomDetail />} />
-        <Route
-          path="https://lemon-hill-0569b4f00.1.azurestaticapps.net/admin"
-          element={<AdminScreen />}
-        />
+        <Route path="/admin" element={<AdminScreen />} />
       </Routes>
     </>
   );
