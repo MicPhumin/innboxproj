@@ -24,11 +24,30 @@
   background: rgba(0, 0, 0, 0.45); /* ความมืด */
   
 }
+
 .hero-content {
   position: relative;
   z-index: 1;
   color: #fff;
   padding: 80px 120px;
+}
+
+@media (max-width: 425px) {
+  .hero-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  padding: 80px 10px;
+}
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+  .hero-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  padding: 80px 60px;
+}
 }
 
 .page {
