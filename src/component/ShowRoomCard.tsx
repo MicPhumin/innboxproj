@@ -173,7 +173,7 @@ const ShowRoomCard = (props: Props) => {
                         iconPlacement="end"
                         className="bookingbtn"
                         onClick={() => {
-                          navigate(`/RoomDetail/${room.roomId}`, {
+                          navigate(`/roomdetail/${room.roomId}`, {
                             state: {
                               roomId: room.roomId,
                               roomType: room.roomType,

@@ -93,7 +93,10 @@ const AdminScreen = () => {
     };
     try {
       await axios
-        .patch("http://localhost:5000/api/users/reserve", userReserve)
+        .patch(
+          "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/reserve",
+          userReserve,
+        )
         .then((res) => {
           console.log("result", res);
           openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ");
@@ -127,7 +130,10 @@ const AdminScreen = () => {
 
     try {
       await axios
-        .patch("http://localhost:5000/api/users/reserve", userReserve)
+        .patch(
+          "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/reserve",
+          userReserve,
+        )
         .then((res) => {
           console.log("result", res);
           openNotificationWithIcon("success", "ลบข้อมูลสำเร็จ");

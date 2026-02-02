@@ -9,8 +9,11 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<MainScreen />} />
-        <Route path="/RoomDetail/:roomId" element={<RoomDetail />} />
-        <Route path="/Admin" element={<AdminScreen />} />
+        <Route path="/roomdetail/:roomId" element={<RoomDetail />} />
+        <Route
+          path="https://lemon-hill-0569b4f00.1.azurestaticapps.net/admin"
+          element={<AdminScreen />}
+        />
       </Routes>
     </>
   );

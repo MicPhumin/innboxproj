@@ -71,9 +71,13 @@ const RoomDetail = () => {
   };
 
   const handleOk = async () => {
-    await axios.patch("http://localhost:5000/api/users/reserve").then((res) => {
-      console.log("result", res);
-    });
+    await axios
+      .patch(
+        "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/reserve",
+      )
+      .then((res) => {
+        console.log("result", res);
+      });
   };
 
   const handleCancel = () => {

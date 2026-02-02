@@ -63,7 +63,7 @@ const QrCodePromptpay = (props: Props) => {
       setCheckSlip("wait");
       try {
         const response = await axios.post(
-          "http://localhost:5000/checkSlip",
+          "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/checkSlip",
           formData,
         );
 
