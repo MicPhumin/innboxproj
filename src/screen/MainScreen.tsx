@@ -29,7 +29,9 @@ const MainScreen = () => {
 
   const getAllUserData = async () => {
     await axios
-      .get("http://localhost:5000/api/users")
+      .get(
+        "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
+      )
       .then((res: { data: Room[] }) => {
         const data = res.data.filter((item: Room) => {
           return item.isActive === "false";
@@ -85,7 +87,9 @@ const MainScreen = () => {
     setRoomType(value);
 
     const newData = await axios
-      .get("http://localhost:5000/api/users")
+      .get(
+        "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
+      )
       .then((res: { data: Room[] }) => {
         const data = res.data.filter((item: Room) => {
           return item.isActive === "false" && item.roomType === value;
@@ -141,7 +145,9 @@ const MainScreen = () => {
         console.log("roomData", roomData);
 
         const newData = await axios
-          .get("http://localhost:5000/api/users")
+          .get(
+            "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
+          )
           .then((res: { data: Room[] }) => {
             const data = res.data.filter((item: Room) => {
               return item.isActive === "false";
@@ -157,7 +163,9 @@ const MainScreen = () => {
       } else if (roomType && dateCheck.length !== 0) {
         console.log("roomtype,date");
         const newData = await axios
-          .get("http://localhost:5000/api/users")
+          .get(
+            "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
+          )
           .then((res: { data: Room[] }) => {
             const data = res.data.filter((item: Room) => {
               return item.isActive === "false";
@@ -177,7 +185,9 @@ const MainScreen = () => {
       setDate([]);
       setDateShow(null);
       const newData = await axios
-        .get("http://localhost:5000/api/users")
+        .get(
+          "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
+        )
         .then((res: { data: Room[] }) => {
           const data = res.data.filter((item: Room) => {
             return item.isActive === "false";

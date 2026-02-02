@@ -37,7 +37,9 @@ const AdminScreen = () => {
   const [api, contextHolder] = notification.useNotification();
   const getUserData = async () => {
     await axios
-      .get("http://localhost:5000/api/users")
+      .get(
+        "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
+      )
       .then((res: { data: Room[] }) => {
         setRoomData(res.data);
       });
