@@ -69,15 +69,23 @@ const RoomDetail = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
+  const openNotificationWithIcon = (type: NotificationType, title: string) => {
+    api[type]({
+      title: title,
+    });
+  };
 
   const handleOk = async () => {
     await axios
       .patch(
         "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/reserve",
+        modalText,
       )
       .then((res) => {
         console.log("result", res);
+        openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ");
       });
+    console.log("ok result");
   };
 
   const handleCancel = () => {
@@ -108,17 +116,9 @@ const RoomDetail = () => {
   };
   const onFinishFailed: FormProps<Room>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    openNotificationWithIcon("error", errorInfo);
+    openNotificationWithIcon("error", "เพิ่มข้อมูลไม่สำเร็จ");
   };
 
-  const openNotificationWithIcon = (type: NotificationType, err: any) => {
-    err.errorFields.map((item: any) => {
-      api[type]({
-        title: <div style={{ color: "red" }}>บันทึกข้อมูลไม่สำเร็จ</div>,
-        description: item.errors[0],
-      });
-    });
-  };
   return (
     <>
       {contextHolder}
