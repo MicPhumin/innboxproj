@@ -15,6 +15,7 @@ import {
   DatePicker,
   type FormProps,
   notification,
+  Select,
 } from "antd";
 
 import React, { useEffect, useState, type SetStateAction } from "react";
@@ -32,26 +33,35 @@ type NotificationType = "success" | "info" | "warning" | "error";
 const AdminScreen = () => {
   const [form] = Form.useForm();
   const [roomData, setRoomData] = useState<Room[]>([]);
+  const [roomDataSelect, setRoomDataSelect] = useState<Room[]>([]);
   const [date, setDate] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+
   const getUserData = async () => {
     await axios
       .get(
         "https://innboxbackend-e2h0gbh9hxb7gygp.southeastasia-01.azurewebsites.net/rooms",
       )
       .then((res: { data: Room[] }) => {
+        const data = res.data.filter((item: Room) => {
+          return item.isActive === "false";
+        });
         setRoomData(res.data);
+        setRoomDataSelect(data);
       });
   };
+
   useEffect(() => {
     getUserData();
   }, []);
+
   const openNotificationWithIcon = (type: NotificationType, title: string) => {
     api[type]({
       title: title,
     });
   };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -270,9 +280,13 @@ const AdminScreen = () => {
                 ]}
                 style={{ width: "100%" }}
               >
-                <InputNumber
+                <Select
                   style={{ width: "100%" }}
                   placeholder="ระบุหมายเลขห้อง"
+                  options={roomDataSelect.map((item: Room) => ({
+                    label: item.roomId,
+                    value: item.roomId,
+                  }))}
                 />
               </Form.Item>
               <Form.Item
