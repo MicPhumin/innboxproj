@@ -220,10 +220,10 @@ const MainScreen = () => {
                 onChange={handleSelectChange}
                 options={[
                   {
-                    value: "ห้องเตียงเดี่ยว",
+                    value: "single",
                     label: "ห้องเตียงเดี่ยว",
                   },
-                  { value: "ห้องเตียงคู่", label: "ห้องเตียงคู่" },
+                  { value: "couple", label: "ห้องเตียงคู่" },
                 ]}
                 value={roomType === undefined ? undefined : roomType}
               />

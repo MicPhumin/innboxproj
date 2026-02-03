@@ -86,7 +86,7 @@ const ShowRoomCard = (props: Props) => {
                   {/* Content */}
                   <Col md={24} lg={10} xl={10} style={{ padding: 16 }}>
                     <h2 style={{ margin: 0 }}>
-                      {room.roomType == "ห้องเตียงเดี่ยว"
+                      {room.roomType == "single"
                         ? `ห้องหมายเลข ${room.roomId} (เตียงเดี่ยว)`
                         : `ห้องหมายเลข ${room.roomId} (เตียงคู่)`}
                     </h2>
