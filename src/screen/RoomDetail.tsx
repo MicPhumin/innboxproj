@@ -101,8 +101,6 @@ const RoomDetail = () => {
     setIsModalOpen(false);
   };
 
-  console.log("state", state);
-
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
     const userReserve = {
       roomId: state.roomId,
@@ -116,17 +114,17 @@ const RoomDetail = () => {
       end_date: date[1],
       isActive: values.isActive === undefined ? "true" : values.isActive,
     };
-    console.log("userReserve", userReserve);
-
     showModal();
     setModalText(userReserve);
   };
   const onFinishFailed: FormProps<Room>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    errorInfo.errorFields.map((item: any) => {
-      openNotificationWithIcon("error", "เพิ่มข้อมูลไม่สำเร็จ", item.errors[0]);
-      console.log("item", item.errors);
-    });
+    const errors = errorInfo.errorFields.map((item) => item.errors[0]);
+    openNotificationWithIcon(
+      "error",
+      "เพิ่มข้อมูลไม่สำเร็จ",
+      errors.map((err) => `• ${err}`).join("\n"),
+    );
   };
 
   const onRangeChange: RangePickerProps["onChange"] = async (
