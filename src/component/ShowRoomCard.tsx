@@ -173,7 +173,6 @@ const ShowRoomCard = (props: Props) => {
                             state: {
                               roomId: room.roomId,
                               roomType: room.roomType,
-                              dateCheck: props?.dateCheck,
                             },
                           });
                         }}

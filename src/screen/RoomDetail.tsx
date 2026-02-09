@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useState, type SetStateAction } from "react";
 import { useLocation, useNavigate } from "react-router";
 import {
   Card,
@@ -16,9 +16,10 @@ import {
   notification,
   Modal,
   Button,
+  DatePicker,
 } from "antd";
 import "./RoomDetail.css";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { SlCalender } from "react-icons/sl";
 import { MdDirectionsBike } from "react-icons/md";
 import { FiCoffee } from "react-icons/fi";
@@ -38,12 +39,14 @@ import glassbath from "../assets/glassbath.jpg";
 import bathroom from "../assets/bathroom.jpg";
 import bike from "../assets/bike.jpg";
 import sheepdoll from "../assets/sheepdoll.jpg";
+import type { RangePickerProps } from "antd/es/date-picker";
 
 // import "dayjs/locale/th";
 
 // type Props = {};
 const { Title } = Typography;
 const { TextArea } = Input;
+const { RangePicker } = DatePicker;
 type NotificationType = "success" | "info" | "warning" | "error";
 
 const RoomDetail = () => {
@@ -51,6 +54,7 @@ const RoomDetail = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [date, setDate] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setModalText] = useState<Room>({
     roomId: state.roomId,
@@ -60,8 +64,8 @@ const RoomDetail = () => {
     tel: "",
     email: "",
     note: "",
-    start_date: state.dateCheck[0],
-    end_date: state.dateCheck[1],
+    start_date: date[0],
+    end_date: date[0],
     isActive: "",
   });
   const [successBtn, setSuccessBtn] = useState<boolean>(true);
@@ -69,9 +73,14 @@ const RoomDetail = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const openNotificationWithIcon = (type: NotificationType, title: string) => {
+  const openNotificationWithIcon = (
+    type: NotificationType,
+    title: string,
+    des: string,
+  ) => {
     api[type]({
       title: title,
+      description: des,
     });
   };
 
@@ -83,7 +92,7 @@ const RoomDetail = () => {
       )
       .then((res) => {
         console.log("result", res);
-        openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ");
+        openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ", "");
       });
     console.log("ok result");
   };
@@ -92,10 +101,6 @@ const RoomDetail = () => {
     setIsModalOpen(false);
   };
 
-  const date1 = dayjs(state.dateCheck ? state.dateCheck[0] : "", "DD/MM/YYYY");
-  const result1 = date1.format("DD MMM YYYY");
-  const date2 = dayjs(state.dateCheck ? state.dateCheck[1] : "", "DD/MM/YYYY");
-  const result2 = date2.format("DD MMM YYYY");
   console.log("state", state);
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
@@ -107,16 +112,35 @@ const RoomDetail = () => {
       tel: values.tel,
       email: values.email,
       note: values.note === undefined ? "-" : values.note,
-      start_date: state.dateCheck === undefined ? "-" : state.dateCheck[0],
-      end_date: state.dateCheck === undefined ? "-" : state.dateCheck[1],
+      start_date: date[0],
+      end_date: date[1],
       isActive: values.isActive === undefined ? "true" : values.isActive,
     };
+    console.log("userReserve", userReserve);
+
     showModal();
     setModalText(userReserve);
   };
   const onFinishFailed: FormProps<Room>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    openNotificationWithIcon("error", "เพิ่มข้อมูลไม่สำเร็จ");
+    errorInfo.errorFields.map((item: any) => {
+      openNotificationWithIcon("error", "เพิ่มข้อมูลไม่สำเร็จ", item.errors[0]);
+      console.log("item", item.errors);
+    });
+  };
+
+  const onRangeChange: RangePickerProps["onChange"] = async (
+    dates: null | (Dayjs | null)[],
+    dateStrings: string[],
+  ) => {
+    if (dates) {
+      const dateCheck: SetStateAction<string[]> = [];
+      dateCheck.push(dateStrings[0], dateStrings[1]);
+      setDate(dateCheck);
+    } else {
+      console.log("Clear");
+      setDate([]);
+    }
   };
 
   return (
@@ -422,21 +446,6 @@ const RoomDetail = () => {
                   รายละเอียดการจอง
                 </Title>{" "}
                 <Divider></Divider>
-                {state.dateCheck &&
-                result1 != "Invalid Date" &&
-                result2 != "Invalid Date" ? (
-                  <>
-                    <p style={{ color: "#555", marginRight: "5px" }}>
-                      วันที่เข้าพัก (เช็กอิน & เช็กเอาต์)
-                    </p>
-                    <p style={{ color: "#555", marginRight: "5px" }}>
-                      <SlCalender style={{ marginRight: "10px" }} />
-                      {result1} - {result2}
-                    </p>
-                  </>
-                ) : (
-                  <></>
-                )}
                 <Form
                   layout={"vertical"}
                   form={form}
@@ -482,6 +491,24 @@ const RoomDetail = () => {
                       style={{ width: "100%" }}
                     >
                       <Input placeholder="ระบุหมายเลขโทรศัพท์" />
+                    </Form.Item>
+                    <Form.Item
+                      label="วันที่เข้า-วันที่ออก"
+                      name="start_date-end_date"
+                      rules={[
+                        {
+                          required: true,
+                          message: "กรุณาระบุวันที่เข้า-วันที่ออก",
+                        },
+                      ]}
+                      style={{ width: "100%" }}
+                    >
+                      <RangePicker
+                        size="large"
+                        onChange={onRangeChange}
+                        format="DD/MM/YYYY"
+                        style={{ width: "100%" }}
+                      />
                     </Form.Item>
                     <Form.Item
                       label="อีเมล"

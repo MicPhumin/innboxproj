@@ -208,7 +208,7 @@ const MainScreen = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "ค้นหาด้วยวันที่",
+      label: "ค้นหาด้วยประเภทห้อง",
       children: (
         <>
           <Row justify={"center"} gutter={16} align={"middle"}>
@@ -228,7 +228,7 @@ const MainScreen = () => {
                 value={roomType === undefined ? undefined : roomType}
               />
             </Col>
-            <Col md={20} lg={12} xl={12}>
+            {/* <Col md={20} lg={12} xl={12}>
               <RangePicker
                 size="large"
                 onChange={onRangeChange}
@@ -240,17 +240,6 @@ const MainScreen = () => {
                     : null
                 }
               />
-            </Col>
-            {/* <Col xs={16} sm={16} md={20} lg={12} xl={6}>
-              <Button
-                icon={<SearchOutlined style={{ fontSize: 16 }} />}
-                iconPlacement="end"
-                className="bookingbtn"
-                size="large"
-                onClick={() => onSearch()}
-              >
-                ค้นหา
-              </Button>
             </Col> */}
           </Row>
         </>
@@ -258,7 +247,7 @@ const MainScreen = () => {
     },
     {
       key: "2",
-      label: "ค้นหาด้วยห้องพัก",
+      label: "ห้องพักทั้งหมด",
     },
   ];
 
