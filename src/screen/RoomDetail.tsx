@@ -186,7 +186,7 @@ const RoomDetail = () => {
                     }}
                   >
                     <Col>
-                      {state.roomType === "ห้องเตียงเดี่ยว" ? (
+                      {state.roomType === "single" ? (
                         <Image height={200} width={300} src={singleroom} />
                       ) : (
                         <Image height={200} width={300} src={twinroom} />

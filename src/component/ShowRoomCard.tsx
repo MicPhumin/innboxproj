@@ -1,6 +1,5 @@
 import "./ShowRoomCard.css";
 import { Carousel, Col, Row, Image, Rate, Card, Tag, Button } from "antd";
-
 import { UserOutlined } from "@ant-design/icons";
 import { FaBed, FaTv } from "react-icons/fa";
 import { MdDirectionsBike } from "react-icons/md";
@@ -38,52 +37,55 @@ const ShowRoomCard = (props: Props) => {
               <Card className="roomCard" style={{ padding: 0 }}>
                 <Row>
                   <Col md={24} lg={8} xl={8}>
-                    <Carousel autoplay style={{ borderRadius: 20 }}>
-                      <div>
-                        {room.roomType == "ห้องเตียงเดี่ยว" ? (
-                          <Image
-                            height={300}
-                            width={400}
-                            src={singleroom}
-                            style={{ borderRadius: 20 }}
-                          />
+                    <Image.PreviewGroup preview>
+                      <Carousel autoplay effect="fade">
+                        {room.roomType == "single" ? (
+                          <div>
+                            <Image
+                              height={300}
+                              width={400}
+                              src={singleroom}
+                              style={{ borderRadius: 20 }}
+                            />
+                          </div>
                         ) : (
+                          <div>
+                            <Image
+                              height={300}
+                              width={400}
+                              src={twinroom}
+                              style={{ borderRadius: 20 }}
+                            />
+                          </div>
+                        )}
+                        <div>
                           <Image
                             height={300}
                             width={400}
-                            src={twinroom}
+                            src={desk}
                             style={{ borderRadius: 20 }}
                           />
-                        )}
-                      </div>
-                      <div>
-                        <Image
-                          height={300}
-                          width={400}
-                          src={desk}
-                          style={{ borderRadius: 20 }}
-                        />
-                      </div>
-                      <div>
-                        <Image
-                          height={300}
-                          width={400}
-                          src={glassbath}
-                          style={{ borderRadius: 20 }}
-                        />
-                      </div>
-                      <div>
-                        <Image
-                          height={300}
-                          width={400}
-                          src={bathroom}
-                          style={{ borderRadius: 20 }}
-                        />
-                      </div>
-                    </Carousel>
+                        </div>
+                        <div>
+                          <Image
+                            height={300}
+                            width={400}
+                            src={glassbath}
+                            style={{ borderRadius: 20 }}
+                          />
+                        </div>
+                        <div>
+                          <Image
+                            height={300}
+                            width={400}
+                            src={bathroom}
+                            style={{ borderRadius: 20 }}
+                          />
+                        </div>
+                      </Carousel>
+                    </Image.PreviewGroup>
                   </Col>
 
-                  {/* Content */}
                   <Col md={24} lg={10} xl={10} style={{ padding: 16 }}>
                     <h2 style={{ margin: 0 }}>
                       {room.roomType == "single"
@@ -92,12 +94,6 @@ const ShowRoomCard = (props: Props) => {
                     </h2>
 
                     <Rate disabled defaultValue={5} style={{ fontSize: 16 }} />
-
-                    {/* <div style={{ marginTop: 6 }}>
-              <a>
-                <EnvironmentOutlined /> Show on map
-              </a>
-            </div> */}
                     <Row>
                       <Tag
                         color="green"
