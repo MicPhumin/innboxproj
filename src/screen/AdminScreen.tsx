@@ -242,6 +242,7 @@ const AdminScreen = () => {
             onClick={() => {
               onDelete(record);
             }}
+            disabled={record.isActive === "false"}
           >
             ลบข้อมูล
           </Button>
