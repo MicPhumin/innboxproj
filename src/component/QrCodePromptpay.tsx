@@ -11,6 +11,7 @@ import {
   type UploadFile,
   type UploadProps,
   notification,
+  Tooltip,
 } from "antd";
 import type { Room } from "../type/room";
 import { UploadOutlined } from "@ant-design/icons";
@@ -19,6 +20,7 @@ import { FaCheckSquare } from "react-icons/fa";
 import InnboxLoading from "./InnboxLoading";
 import { MdError, MdOutlineWarning } from "react-icons/md";
 import InnboxQrPromptpay from "/src/assets/InnboxQrPromptpay.jpg";
+import { CiCircleInfo } from "react-icons/ci";
 type Props = {
   value: Room;
   setSuccessBtn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -143,6 +145,18 @@ const QrCodePromptpay = (props: Props) => {
           <Row justify={"center"}>
             <Col xs={12} sm={12} md={12} lg={12} xl={11}>
               {" "}
+              <div style={{ fontSize: 16 }}>วันที่เข้า - วันที่ออก :</div>
+            </Col>
+            <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+              {" "}
+              <div style={{ fontSize: 16 }}>
+                {props.value.start_date} - {props.value.end_date}
+              </div>
+            </Col>
+          </Row>
+          <Row justify={"center"}>
+            <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+              {" "}
               <div style={{ fontSize: 16 }}>อีเมล :</div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={12} xl={11}>
@@ -187,7 +201,13 @@ const QrCodePromptpay = (props: Props) => {
           <Divider />
           <Row justify={"center"}>
             <Col xs={12} sm={12} md={12} lg={12} xl={11}>
-              <div style={{ fontSize: 18 }}>อัพโหลดสลิป :</div>
+              <div style={{ fontSize: 18 }}>
+                อัพโหลดสลิป
+                <Tooltip title="ยืนยันสลิปเพื่อจองห้องพัก">
+                  <CiCircleInfo />
+                </Tooltip>{" "}
+                :
+              </div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={12} xl={11}>
               <Upload
