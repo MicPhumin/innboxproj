@@ -23,7 +23,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { SlCalender } from "react-icons/sl";
 import { MdDirectionsBike } from "react-icons/md";
 import { FiCoffee } from "react-icons/fi";
-import { FaTv, FaWifi } from "react-icons/fa";
+import { FaCheckSquare, FaTv, FaWifi } from "react-icons/fa";
 import { TbAirConditioning, TbIroning } from "react-icons/tb";
 import { LuRefrigerator } from "react-icons/lu";
 import { IoWaterOutline } from "react-icons/io5";
@@ -39,6 +39,7 @@ import glassbath from "../assets/glassbath.jpg";
 import bathroom from "../assets/bathroom.jpg";
 import bike from "../assets/bike.jpg";
 import sheepdoll from "../assets/sheepdoll.jpg";
+import imageLoading from "../assets/innboxLogo.png";
 import type { RangePickerProps } from "antd/es/date-picker";
 
 // import "dayjs/locale/th";
@@ -56,6 +57,7 @@ const RoomDetail = () => {
   const { state } = useLocation();
   const [date, setDate] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [finishhModal, setFinishModal] = useState(false);
   const [modalText, setModalText] = useState<Room>({
     roomId: state.roomId,
     roomType: state.roomType,
@@ -92,13 +94,19 @@ const RoomDetail = () => {
       )
       .then((res) => {
         console.log("result", res);
-        openNotificationWithIcon("success", "เพิ่มข้อมูลสำเร็จ", "");
+        openNotificationWithIcon("success", "จองห้องพักสำเร็จ", "");
       });
     console.log("ok result");
+    setIsModalOpen(false);
+    setFinishModal(true);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const handleFinishCancel = () => {
+    setFinishModal(false);
   };
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
@@ -144,6 +152,119 @@ const RoomDetail = () => {
   return (
     <>
       {contextHolder}
+      <Modal
+        title={
+          <>
+            <Row>
+              <Image width={100} src={imageLoading} preview={false} />
+            </Row>
+            <Row justify={"center"} style={{ margin: 20 }}>
+              <Row>
+                <div style={{ fontSize: 18 }}>
+                  จองห้องพักสำเร็จ{" "}
+                  <FaCheckSquare style={{ color: "green", marginLeft: "5" }} />
+                </div>
+              </Row>
+            </Row>
+          </>
+        }
+        closable={{ "aria-label": "Custom Close Button" }}
+        open={finishhModal}
+        onCancel={handleFinishCancel}
+        footer={false}
+      >
+        {" "}
+        <Row justify={"center"}>
+          <Col xs={24} sm={24} md={24} lg={22} xl={22}>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>หมายเลขห้อง :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>{state.roomId}</div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>ประเภทห้อง :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>
+                  {state.roomType === "single"
+                    ? "ห้องเตียงเดี่ยว"
+                    : "ห้องเตียงคู่"}
+                </div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>ชื่อจริง :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>{modalText.firstName}</div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>นามสกุล :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>{modalText.lastName}</div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                <div style={{ fontSize: 16 }}>เบอร์โทรศัพท์ :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                <div style={{ fontSize: 16 }}>{modalText.tel}</div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>วันที่เข้า - วันที่ออก :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>
+                  {modalText.start_date} - {modalText.end_date}
+                </div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>อีเมล :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>{modalText.email}</div>
+              </Col>
+            </Row>
+            <Row justify={"center"} style={{ margin: 10 }}>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>คำขอพิเศษ :</div>
+              </Col>
+              <Col xs={12} sm={12} md={12} lg={12} xl={11}>
+                {" "}
+                <div style={{ fontSize: 16 }}>
+                  {modalText.note ? modalText.note : "-"}
+                </div>
+              </Col>
+            </Row>{" "}
+          </Col>
+        </Row>
+      </Modal>
       <Modal
         title={<div style={{ fontSize: 18 }}>ยืนยันข้อมูล</div>}
         closable={{ "aria-label": "Custom Close Button" }}
