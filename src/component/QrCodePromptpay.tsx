@@ -74,10 +74,11 @@ const QrCodePromptpay = (props: Props) => {
         const OwnerName = Name.includes("กณวรรษน์");
 
         console.log("OwnerName", OwnerName);
+        console.log("response.data.amount", response.data.data.amount);
         if (
           response.data.success === true &&
           OwnerName === true &&
-          response.data.amout === 550
+          response.data.data.amount === 550
         ) {
           openNotificationWithIcon("success", "ตรวจสอบสลิปสำเร็จ");
           props.setSuccessBtn(false);
