@@ -71,7 +71,7 @@ const QrCodePromptpay = (props: Props) => {
 
         console.log("res.data", response.data.data.receiver.displayName);
         const Name = response.data.data.receiver.displayName;
-        const OwnerName = Name.includes("กณวรรษ์");
+        const OwnerName = Name.includes("กณวรรษน์");
 
         console.log("OwnerName", OwnerName);
         if (
