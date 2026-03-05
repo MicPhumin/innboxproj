@@ -269,13 +269,12 @@ const MainScreen = () => {
                 centered
                 items={items}
                 style={{ width: "60%" }}
-              />{" "}
+              />
             </Row>
           </div>
         </Row>
         <Row>
-          <Col span={1}></Col>
-          <Col span={21}>
+          <Col span={22}>
             {tab == "1" ? (
               <>
                 <ShowRoomCard room={roomData} dateCheck={date} />

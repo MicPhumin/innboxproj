@@ -109,7 +109,7 @@ const RoomDetail = () => {
     setFinishModal(false);
     navigate("/");
   };
-
+  console.log("window width", window.innerWidth);
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
     const userReserve = {
       roomId: state.roomId,
@@ -305,7 +305,7 @@ const RoomDetail = () => {
           </Row>
 
           <Row gutter={16}>
-            <Col md={24} lg={16} xl={16}>
+            <Col xs={22} md={24} lg={16} xl={16}>
               <Card className="roomCard">
                 {/* <InnboxLoading /> */}
                 <Title level={1} style={{ marginTop: "10px" }}>
@@ -329,28 +329,57 @@ const RoomDetail = () => {
                         ),
                     }}
                   >
-                    <Col>
-                      {state.roomType === "single" ? (
-                        <Image height={200} width={300} src={singleroom} />
-                      ) : (
-                        <Image height={200} width={300} src={twinroom} />
-                      )}
-                    </Col>
-                    <Col>
-                      <Image height={200} width={300} src={desk} />
-                    </Col>
-                    <Col>
-                      <Image height={200} width={300} src={glassbath} />
-                    </Col>
-                    <Col>
-                      <Image height={200} width={300} src={bathroom} />
-                    </Col>
-                    <Col>
-                      <Image height={200} width={300} src={bike} />
-                    </Col>
-                    <Col>
-                      <Image height={200} width={300} src={sheepdoll} />
-                    </Col>
+                    {window.innerWidth <= 375 ? (
+                      <>
+                        <Col>
+                          {state.roomType === "single" ? (
+                            <Image height={150} width={240} src={singleroom} />
+                          ) : (
+                            <Image height={150} width={240} src={twinroom} />
+                          )}
+                        </Col>
+                        <Col>
+                          <Image height={150} width={240} src={desk} />
+                        </Col>
+                        <Col>
+                          <Image height={150} width={240} src={glassbath} />
+                        </Col>
+                        <Col>
+                          <Image height={150} width={240} src={bathroom} />
+                        </Col>
+                        <Col>
+                          <Image height={150} width={240} src={bike} />
+                        </Col>
+                        <Col>
+                          <Image height={150} width={240} src={sheepdoll} />
+                        </Col>
+                      </>
+                    ) : (
+                      <>
+                        <Col>
+                          {state.roomType === "single" ? (
+                            <Image height={200} width={300} src={singleroom} />
+                          ) : (
+                            <Image height={200} width={300} src={twinroom} />
+                          )}
+                        </Col>
+                        <Col>
+                          <Image height={200} width={300} src={desk} />
+                        </Col>
+                        <Col>
+                          <Image height={200} width={300} src={glassbath} />
+                        </Col>
+                        <Col>
+                          <Image height={200} width={300} src={bathroom} />
+                        </Col>
+                        <Col>
+                          <Image height={200} width={300} src={bike} />
+                        </Col>
+                        <Col>
+                          <Image height={200} width={300} src={sheepdoll} />
+                        </Col>
+                      </>
+                    )}
                   </Image.PreviewGroup>
                 </Row>
                 <Divider
@@ -560,7 +589,7 @@ const RoomDetail = () => {
                 </Row>
               </Card>
             </Col>
-            <Col md={24} lg={8} xl={8}>
+            <Col xs={22} md={24} lg={8} xl={8}>
               <Card className="roomCard">
                 <Title level={3} style={{ marginTop: "10px" }}>
                   รายละเอียดการจอง

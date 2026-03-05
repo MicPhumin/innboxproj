@@ -95,12 +95,31 @@ const ShowRoomCard = (props: Props) => {
 
                     <Rate disabled defaultValue={5} style={{ fontSize: 16 }} />
                     <Row>
-                      <Tag
-                        color="green"
-                        style={{ fontSize: 16, marginTop: 8, marginBottom: 8 }}
-                      >
-                        โปรโมชั่นและข้อเสนอ / Promos and Offers
-                      </Tag>
+                      {window.innerWidth <= 375 ? (
+                        <>
+                          <Tag
+                            color="green"
+                            style={{
+                              fontSize: 14,
+                              marginTop: 8,
+                              marginBottom: 8,
+                            }}
+                          >
+                            โปรโมชั่นและข้อเสนอ / Promos and Offers
+                          </Tag>
+                        </>
+                      ) : (
+                        <Tag
+                          color="green"
+                          style={{
+                            fontSize: 16,
+                            marginTop: 8,
+                            marginBottom: 8,
+                          }}
+                        >
+                          โปรโมชั่นและข้อเสนอ / Promos and Offers
+                        </Tag>
+                      )}
                     </Row>
                     <Row>
                       <p style={{ marginTop: 5, color: "#555" }}>
@@ -129,6 +148,8 @@ const ShowRoomCard = (props: Props) => {
                   </Col>
 
                   <Col
+                    xs={24}
+                    sm={24}
                     md={24}
                     lg={6}
                     xl={6}

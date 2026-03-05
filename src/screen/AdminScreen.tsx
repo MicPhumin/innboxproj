@@ -162,13 +162,12 @@ const AdminScreen = () => {
       title: "หมายเลขห้อง",
       dataIndex: "roomId",
       key: "roomId",
-      responsive: ["xs", "sm", "md", "lg"],
     },
     {
       title: "ประเภทห้อง",
       dataIndex: "roomType",
       key: "roomType",
-      responsive: ["xs", "sm", "md", "lg"],
+
       render: (text: string) => (
         <>
           <div>{text === "single" ? "ห้องเตียงเดี่ยว" : "ห้องเตียงคู่"}</div>
@@ -179,43 +178,36 @@ const AdminScreen = () => {
       title: "ชื่อจริง",
       dataIndex: "firstName",
       key: "firstName",
-      responsive: ["sm", "md", "lg"],
     },
     {
       title: "นามสกุล",
       dataIndex: "lastName",
       key: "lastName",
-      responsive: ["sm", "md", "lg"],
     },
     {
       title: "เบอร์โทรศัพท์",
       dataIndex: "tel",
       key: "tel",
-      responsive: ["xl"],
     },
     {
       title: "อีเมล",
       dataIndex: "email",
       key: "email",
-      responsive: ["xl"],
     },
     {
       title: "วันที่เข้า",
       dataIndex: "start_date",
       key: "start_date",
-      responsive: ["lg", "xl"],
     },
     {
       title: "วันที่ออก",
       dataIndex: "end_date",
       key: "end_date",
-      responsive: ["lg", "xl"],
     },
     {
       title: "คำขอพิเศษ(หากมี)",
       dataIndex: "note",
       key: "note",
-      responsive: ["xl"],
     },
     {
       title: "สถานะห้องพัก",
@@ -410,7 +402,11 @@ const AdminScreen = () => {
         <Row>
           <Col></Col>
           <Col style={{ width: "100%" }}>
-            <Table<Room> columns={columns} dataSource={roomData} />
+            <Table<Room>
+              columns={columns}
+              dataSource={roomData}
+              scroll={{ x: true }}
+            />
           </Col>
         </Row>
       </div>
