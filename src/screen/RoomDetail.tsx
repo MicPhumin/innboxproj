@@ -107,6 +107,7 @@ const RoomDetail = () => {
 
   const handleFinishCancel = () => {
     setFinishModal(false);
+    navigate("/");
   };
 
   const onFinish: FormProps<Room>["onFinish"] = (values) => {
